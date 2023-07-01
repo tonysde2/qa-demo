@@ -8,20 +8,26 @@ workflows:
   build-and-run:
     jobs:
       - build-and-run-demo
+      - newman-collection-run-env-timeout:
+          requires:
+            - build-and-run-demo
 
 jobs:
   build-and-run-demo:
-    executor: newman/postman-newman-docker
     docker:
       - image: cimg/python:3.10
 
     steps:
       - checkout
-
       - run:
           name: Run Demo Script
           command: python demo.py
 
+  newman-collection-run-env-timeout:
+    executor: newman/postman-newman-docker
+    steps:
+      - checkout
       - newman/newman-run:
           collection: ./QADemo.postman_collection.json
           environment: ./QADemo.postman_environment.json
+          timeout: "1000"
