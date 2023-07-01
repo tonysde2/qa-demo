@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "779ad028-8d53-40eb-9f03-282730d17a38",
+		"name": "QA Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11794322"
+	},
+	"item": [
+		{
+			"name": "Fetch a Random Cat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.eq(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cat",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch all cats with tag",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.eq(200);",
+							"});",
+							"",
+							"pm.test(\"It returns more than one cats\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.gt(1);",
+							"});",
+							"",
+							"pm.test(\"It returns cat info\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].tags.length).to.be.gt(1);",
+							"    pm.expect(jsonData[0].owner.length).to.be.gt(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/cats?tags={{tags}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"cats"
+					],
+					"query": [
+						{
+							"key": "tags",
+							"value": "{{tags}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

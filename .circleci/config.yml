@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  newman: postman/newman@1.0.0
+
 workflows:
   version: 2
   build-and-run:
@@ -8,6 +11,7 @@ workflows:
 
 jobs:
   build-and-run-demo:
+    executor: newman/postman-newman-docker
     docker:
       - image: cimg/python:3.10
 
@@ -18,3 +22,6 @@ jobs:
           name: Run Demo Script
           command: python demo.py
 
+      - newman/newman-run:
+          collection: ./QADemo.postman_collection.json
+          environment: ./QADemo.postman_environment.json
