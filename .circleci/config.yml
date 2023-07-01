@@ -30,4 +30,5 @@ jobs:
       - newman/newman-run:
           collection: ./QADemo.postman_collection.json
           environment: ./QADemo.postman_environment.json
-          timeout: "1000"
+          # 60000 milliseconds = 60 seconds = 1 minute
+          timeout: "60000"
