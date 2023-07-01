@@ -41,7 +41,7 @@ jobs:
           timeout: "1000"
       - run:
           name: Rollback Deployment
-          command: python rollback.py
+          command: echo "Should run rollback script here...perhaps calling circleci API?"
           when: on_fail
 
   rollback-deployment:
