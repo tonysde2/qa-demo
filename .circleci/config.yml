@@ -11,6 +11,13 @@ workflows:
       - newman-collection-run-env-timeout:
           requires:
             - build-and-run-demo
+      - hold:
+          type: approval
+          requires:
+            - newman-collection-run-env-timeout
+      - rollback-deployment:
+          requires:
+            - hold
 
 jobs:
   build-and-run-demo:
@@ -32,7 +39,9 @@ jobs:
           environment: ./QADemo.postman_environment.json
           # 60000 milliseconds = 60 seconds = 1 minute
           timeout: "60000"
-      - rollback-deployment:
+      - run:
+          name: Rollback Deployment
+          command: python rollback.py
           when: on_fail
 
   rollback-deployment:
