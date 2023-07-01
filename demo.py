@@ -1,5 +1,5 @@
 def hello():
-    raise NotImplementedError("TODO: implement hello()")
+    # raise NotImplementedError("TODO: implement hello()")
     print("Hello, world!")
 
 
