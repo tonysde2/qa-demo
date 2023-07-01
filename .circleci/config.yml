@@ -11,10 +11,6 @@ workflows:
       - newman-collection-run-env-timeout:
           requires:
             - build-and-run-demo
-      - rollback-deployment:
-          requires:
-            - newman-collection-run-env-timeout
-          when: on_fail
 
 jobs:
   build-and-run-demo:
@@ -36,6 +32,8 @@ jobs:
           environment: ./QADemo.postman_environment.json
           # 60000 milliseconds = 60 seconds = 1 minute
           timeout: "60000"
+      - rollback-deployment:
+          when: on_fail
 
   rollback-deployment:
     docker:
